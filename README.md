@@ -26,10 +26,10 @@
  
 2.	**Open Server Manager**
     - Click `Add Roles and Features`
-	  - Click `Next` through the first few screens
-	  - Under `Server Roles`, check `Active Directory Domain Services`
-	  - Click `Add Features` when prompted
-	  - Click `Next` and then `Install`
+    - Click `Next` through the first few screens
+    - Under `Server Roles`, check `Active Directory Domain Services`
+    - Click `Add Features` when prompted
+    - Click `Next` and then `Install`
   
 3.	**After it installs, click `Promote` this server to a domain controller**
    
@@ -48,12 +48,12 @@
       - Password: `Cyberlab123!`
 
 7.  **Create a Domain Admin User (Jane Doe)**
-	 - Open Server Manager
-   - Go to `Tools` > `Active Directory Users and Computers (ADUC)`
-   - In the left pane, expand your domain `mydomain.com`
-   - Right-click the `domain` > `New` > `Organizational Unit (OU)`
-	  - Name it: `_EMPLOYEES`
-    - Repeat and create another OU: `_ADMINS`
+     - Open Server Manager
+     - Go to `Tools` > `Active Directory Users and Computers (ADUC)`
+     - In the left pane, expand your domain `mydomain.com`
+     - Right-click the `domain` > `New` > `Organizational Unit (OU)`
+       - Name it: `_EMPLOYEES`
+     - Repeat and create another OU: `_ADMINS`
 
 8.	**In `_ADMINS`, right-click > `New` > `User`**
      - First Name: Jane
@@ -93,11 +93,11 @@
 14. **Click `OK` and restart the computer when prompted.**
 
 15. **Verify in ADUC**
-  - RDP back into DC-1 as `jane_admin`
-  - Open `Active Directory Users and Computers`
-  - You should now see `Client-1` listed in the default `Computers` folder
-  - Right-click `Client-1` > `Move`
-	- Move it into the OU: `_CLIENTS` (create this OU if not already made)
+    - RDP back into DC-1 as `jane_admin`
+    - Open `Active Directory Users and Computers`
+    - You should now see `Client-1` listed in the default `Computers` folder
+    - Right-click `Client-1` > `Move`
+      - Move it into the OU: `_CLIENTS` (create this OU if not already made)
 
 ***You’ve now successfully joined a client to the domain!***
 
