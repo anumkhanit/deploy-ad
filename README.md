@@ -21,8 +21,8 @@
 
 1. **Install Active Directory on DC-1**
 	 - Log into `DC-1` via Remote Desktop (RDP) using:
-	  - Username: `labuser`
-	  - Password: `Cyberlab123!`
+	  - Username: (remember the easy username you made? Use that)
+	  - Password: (remember the easy password you made? Use that)
  
 2.	**Open Server Manager**
     - Click `Add Roles and Features`
@@ -137,3 +137,5 @@
 ## Conclusion
 
 You’ve successfully installed Active Directory, promoted a Domain Controller, created admin and test user accounts, joined a client to the domain, enabled Remote Desktop for non-admins and tested domain logins with new accounts.
+
+Move onto the next part: [Creating Users using Powershell](https://github.com/anumkhanit/create-users-powershell)
