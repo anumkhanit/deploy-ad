@@ -2,8 +2,11 @@
 <img src="https://i.imgur.com/Ucqw15T.jpeg" alt="Active Directory" width=500 height=300/> 
 </p>
 
-<h1>How to Install Active Directory & Join Client to Domain in Azure</h1>
-<p>Hands-On Lab: Part 1 & Part 2</p>
+<h1>🧠 How to Install Active Directory & Join a Client to the Domain in Azure (Part 2)</h1>
+<p>🚀 A continuation of our hands-on lab for setting up a fully functioning Active Directory environment using Azure Virtual Machines.</p>
+
+<h1>🧠 Overview</h1>
+<p>✅ This post covers installing Active Directory Domain Services (ADDS), promoting the Domain Controller, and joining a Windows 10 client to the domain.</p>
 
 <h2>Environments and Technologies to use</h2>
 
@@ -17,125 +20,142 @@
 
 -----
 
-## PART 1: Installing & Configuring Active Directory Domain Services
+## 🔧 PART 1: Installing and Configuring Active Directory Domain Services (AD DS)
 
-1. **Install Active Directory on DC-1**
-	 - Log into `DC-1` via Remote Desktop (RDP) using:
-	  - Username: (remember the easy username you made? Use that)
-	  - Password: (remember the easy password you made? Use that)
+1. Log into the DC-1 VM
+   - Use Remote Desktop (RDP)
+   - Enter your credentials:
+	  - Username: `labuser`
+      - Password: `Cyberlab123!`
  
-2.	**Open Server Manager**
-    - Click `Add Roles and Features`
-    - Click `Next` through the first few screens
-    - Under `Server Roles`, check `Active Directory Domain Services`
-    - Click `Add Features` when prompted
-    - Click `Next` and then `Install`
+2.	Install Active Directory Role
+   - Open `Server Manager`
+   - Click `Add Roles and Features`
+   - Click through the first few screens
+   - Under `Server Roles`, check:
+	  - `Active Directory Domain Services`
+      - Then click `Add Features` when prompted
+   - Click `Next` > `Install`
   
-3.	**After it installs, click `Promote` this server to a domain controller**
+3. Promote DC-1 to a Domain Controller
+  - After the role installs, click Promote this server to a domain controller
+  - In the wizard:
+	•	Select `Add a new forest`
+	•	Root domain name: `mydomain.com` (or anything you choose)
+	•	Set a DSRM password: `Cyberlab123!`
+  - Click through the rest of the steps and hit `Install`
+  - The VM will automatically reboot
    
-4.	**In the wizard:**
-    - Select `Add a new forest`
-    - Root domain name: `mydomain.com` (or anything you like)
-    - Click `Next`, set a DSRM password (you can use Cyberlab123!)
-    - Keep clicking `Next`, then `Install`
-
-5.	**Your server will restart**
-
-6.  **Log Back into `DC-1` as a Domain User**
-	  - After reboot, RDP back into `DC-1`
-    - Log in with your domain account:
-	    - Username: `mydomain.com\labuser`
+4.	Create an Admin User (jane_admin)
+   - After reboot, log into `DC-1` with:
+	  - Username: `mydomain.com\labuser`
       - Password: `Cyberlab123!`
 
-7.  **Create a Domain Admin User (Jane Doe)**
-     - Open Server Manager
-     - Go to `Tools` > `Active Directory Users and Computers (ADUC)`
-     - In the left pane, expand your domain `mydomain.com`
-     - Right-click the `domain` > `New` > `Organizational Unit (OU)`
-       - Name it: `_EMPLOYEES`
-     - Repeat and create another OU: `_ADMINS`
+5.	Create an Admin User (jane_admin)
+   - Open `Server Manager`
+   - Go to `Tools` > `Active Directory Users and Computers`
+   - Expand `mydomain.com`
+   - Right-click your `domain` > `New` > `Organizational Unit`
+       - Create two OUs:
+	      •	`_EMPLOYEES`
+	      • `_ADMINS`
+   - In `_ADMINS:`
+	     • Right-click > `New` > `User`
+	     • Fill in:
+	     • First Name: `Jane`
+	     • Last Name: `Doe`
+	     • Username: `jane_admin`
+	     • Password: `Cyberlab123!`
+	     • Uncheck `“User must change password at next logon”`
+    - After creating Jane’s account:
+	    • Right-click `Jane` > `Add to a group`
+	    • Enter: `Domain Admins` > `Check Names` > `OK`
 
-8.	**In `_ADMINS`, right-click > `New` > `User`**
-     - First Name: Jane
-     - Last Name: Doe
-	- Username: `jane_admin`
-  - Password: `Cyberlab123!`
-	- Uncheck `User must change password…`
+***🟢 You now have a domain admin account!***
 
-9. **After creating Jane’s account:**
-   - Right-click `Jane` > Add to a group
-	 - Type `Domain Admins` > Click `Check Names` > `OK`
+6. Switch to Jane’s Admin Account
 
-10.	**Log out of `DC-1`, then log back in as:**
-	  - Username: `mydomain.com\jane_admin`
-	  - Password: `Cyberlab123!`
+- Log out of `DC-1`
+  - Log back in with:
+	  • Username: `mydomain.com\jane_admin`
+	  • Password: `Cyberlab123!`
 
-***Use this account from now on***
-
-11. **Join `Client-1` to the Domain**
-	  - From the Azure Portal, verify:
-	   - `Client-1`’s DNS settings are set to `DC-1`’s private IP
-	  - VM has been restarted
-
-12.	**RDP into `Client-1` using:**
-	 - Username: `labuser`
-	 - Password: `Cyberlab123!`
-
-13. **On `Client-1`:**
-	 - Go to `System Properties`
-	 - Under Computer Name, click `Change settings`
-	 - Click `Change…` button
-	 - Select Domain, and enter: `mydomain.com`
-	 - When prompted, use:
-	  - Username: `mydomain.com\jane_admin`
-	  - Password: `Cyberlab123!`
-
-14. **Click `OK` and restart the computer when prompted.**
-
-15. **Verify in ADUC**
-    - RDP back into DC-1 as `jane_admin`
-    - Open `Active Directory Users and Computers`
-    - You should now see `Client-1` listed in the default `Computers` folder
-    - Right-click `Client-1` > `Move`
-      - Move it into the OU: `_CLIENTS` (create this OU if not already made)
-
-***You’ve now successfully joined a client to the domain!***
+***Use this account going forward.***
 
 -----
 
-## PART 2: Domain Logins and Remote Access
+## 🖥️ PART 2: Join the Client-1 VM to the Domain
 
-1. **Turn On VMs If They’re Off**
-   - In the Azure Portal, start `DC-1` and `Client-1`
-   - Wait for both to fully boot before connecting
+1. Verify DNS and Restart
+  - Ensure `Client-1` is using `DC-1`’s private IP as its DNS
+  - Restart the VM from the Azure Portal if changes were made
 
-2. **Allow Remote Desktop Access for Domain Users `Client-1`**
-	 - RDP into `Client-1` using `mydomain.com\jane_admin`
-	 - Go to:
-	  - `System Properties` > `Remote Desktop`
-	 - Click `Select Users…`
-	 - Add: `Domain Users`
-	 - Click `Check Names` > `OK`
+2. Log into `Client-1` via RDP
+  - Use:
+	• Username: `labuser`
+	• Password: `Cyberlab123!`
 
 ***This allows normal users (not admins) to log in remotely.***
 
-3. **Create Multiple Test Users in PowerShell**
-	 - RDP into `DC-1` as `jane_admin`
-	 - Open `PowerShell ISE` as Administrator
-	 - Paste the following [script](https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1) into a new file
+3. Join to Domain
+  - Open `System Properties`
+  - Under Computer Name, click `Change settings`
+  - Click `Change…` and choose `Domain`
+  - Enter: `mydomain.com`
+  - When prompted:
+	• Username: `mydomain.com\jane_admin`
+	• Password: `Cyberlab123!`
+  - Click `OK`, then `Restart` when prompted
 
-4. **Test User Login on `Client-1`**
-	 - From the Azure Portal, RDP into `Client-1`
-	 - When prompted to log in, use one of the [scripts](https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1) to make new accounts:
-	  - Username: `mydomain.com\testuser1`
-	  - Password: `Cyberlab123!`
+4. Verify Client in Active Directory
+  - RDP into `DC-1` as `jane_admin`
+  - Open `Active Directory Users and Computers`
+  - You’ll see `Client-1` in the Computers folder
+  - Right-click `Client-1` > `Move`
+   - Create and move it to a new OU: `_CLIENTS`
 
-5. **If login succeeds, you’ve confirmed that domain user accounts are working and Remote Desktop is enabled for them!**
+***✅ Your domain is working! The client is joined!***
 
 -----
 
-## Conclusion
+### 🧪 PART 3: Domain Logins and Remote Access
 
-You’ve successfully installed Active Directory, promoted a Domain Controller, created admin and test user accounts, joined a client to the domain, enabled Remote Desktop for non-admins and tested domain logins with new accounts.
+1. Ensure Both VMs Are On
+  - Start both `DC-1` and `Client-1` in the Azure Portal
 
-Move onto the next part: [Creating Users using Powershell](https://github.com/anumkhanit/create-users-powershell)
+2. Enable RDP for Domain Users on `Client-1`
+  - Log into `Client-1` as `mydomain.com\jane_admin`
+  - Go to:
+	• `System Properties` > `Remote Desktop`
+  - Click `Select Users…`
+  - Add: `Domain Users`
+  - Click `Check Names` > `OK`
+
+***💡 Now standard domain users can log in via RDP.***
+
+3. Bulk Create Test Users
+  - RDP into `DC-1` as `jane_admin`
+  - Open `PowerShell ISE` as Admin
+  - Paste this [script](https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1)
+  - Run it to generate a list of user accounts
+
+4. Test Logins from `Client-1`
+  - RDP into `Client-1`
+  - Log in with a test user:
+	• Username: `mydomain.com\testuser1`
+	• Password: `Cyberlab123!`
+
+***✅ If successful, you’ve confirmed domain login and remote access work!***
+
+-----
+
+## ✅ Conclusion
+
+You’ve completed the second part of your Active Directory lab, where you:
+	
+ - Installed and configured Active Directory Domain Services
+ - Promoted DC-1 to a domain controller
+ - Created an admin user (Jane Doe) and joined Client-1 to the domain
+ - Verified communication and enabled Remote Desktop access for domain users
+
+🔜 Next Step to third: [Creating Users using Powershell](https://github.com/anumkhanit/create-users-powershell)
