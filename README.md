@@ -40,9 +40,9 @@
 3. Promote DC-1 to a Domain Controller
   - After the role installs, click Promote this server to a domain controller
   - In the wizard:
-	•	Select `Add a new forest`
-	•	Root domain name: `mydomain.com` (or anything you choose)
-	•	Set a DSRM password: `Cyberlab123!`
+	• Select `Add a new forest`
+	• Root domain name: `mydomain.com` (or anything you choose)
+	• Set a DSRM password: `Cyberlab123!`
   - Click through the rest of the steps and hit `Install`
   - The VM will automatically reboot
    
@@ -60,16 +60,16 @@
 	      •	`_EMPLOYEES`
 	      • `_ADMINS`
    - In `_ADMINS:`
-	     • Right-click > `New` > `User`
-	     • Fill in:
-	     • First Name: `Jane`
-	     • Last Name: `Doe`
-	     • Username: `jane_admin`
-	     • Password: `Cyberlab123!`
-	     • Uncheck `“User must change password at next logon”`
+     - Right-click > `New` > `User`
+     - Fill in:
+	    - First Name: `Jane`
+        - Last Name: `Doe`
+        - Username: `jane_admin`
+        - Password: `Cyberlab123!`
+        - Uncheck `“User must change password at next logon”`
     - After creating Jane’s account:
-	    • Right-click `Jane` > `Add to a group`
-	    • Enter: `Domain Admins` > `Check Names` > `OK`
+	  -  Right-click `Jane` > `Add to a group`
+        - Enter: `Domain Admins` > `Check Names` > `OK`
 
 ***🟢 You now have a domain admin account!***
 
@@ -77,8 +77,8 @@
 
 - Log out of `DC-1`
   - Log back in with:
-	  • Username: `mydomain.com\jane_admin`
-	  • Password: `Cyberlab123!`
+	- Username: `mydomain.com\jane_admin`
+    - Password: `Cyberlab123!`
 
 ***Use this account going forward.***
 
@@ -92,8 +92,8 @@
 
 2. Log into `Client-1` via RDP
   - Use:
-	• Username: `labuser`
-	• Password: `Cyberlab123!`
+	- Username: `labuser`
+	- Password: `Cyberlab123!`
 
 ***This allows normal users (not admins) to log in remotely.***
 
@@ -103,8 +103,8 @@
   - Click `Change…` and choose `Domain`
   - Enter: `mydomain.com`
   - When prompted:
-	• Username: `mydomain.com\jane_admin`
-	• Password: `Cyberlab123!`
+   - Username: `mydomain.com\jane_admin`
+   - Password: `Cyberlab123!`
   - Click `OK`, then `Restart` when prompted
 
 4. Verify Client in Active Directory
@@ -126,10 +126,10 @@
 2. Enable RDP for Domain Users on `Client-1`
   - Log into `Client-1` as `mydomain.com\jane_admin`
   - Go to:
-	• `System Properties` > `Remote Desktop`
-  - Click `Select Users…`
-  - Add: `Domain Users`
-  - Click `Check Names` > `OK`
+	- `System Properties` > `Remote Desktop`
+    - Click `Select Users…`
+    - Add: `Domain Users`
+    - Click `Check Names` > `OK`
 
 ***💡 Now standard domain users can log in via RDP.***
 
@@ -142,8 +142,8 @@
 4. Test Logins from `Client-1`
   - RDP into `Client-1`
   - Log in with a test user:
-	• Username: `mydomain.com\testuser1`
-	• Password: `Cyberlab123!`
+	- Username: `mydomain.com\testuser1`
+    - Password: `Cyberlab123!`
 
 ***✅ If successful, you’ve confirmed domain login and remote access work!***
 
